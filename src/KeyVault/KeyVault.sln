@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Cryptography.Tests
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Extensions.Tests", "KeyVault.Extensions.Tests\KeyVault.Extensions.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E274A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Jose", "Microsoft.Azure.KeyVault.Jose\KeyVault.Jose.csproj", "{937E445A-5604-4998-A9F5-9BE1E39001A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyVault.Jose.Tests", "KeyVault.Jose.Tests\KeyVault.Jose.Tests.csproj", "{E01674C0-B8D7-4598-971C-48B0180E274F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Net40-Debug|Any CPU = Net40-Debug|Any CPU
@@ -64,9 +68,7 @@ Global
 		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
 		{B419782D-CA57-40F9-9322-340A4E852E82}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
 		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
-		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
 		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
-		{B419782D-CA57-40F9-9322-340A4E852E82}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Debug|Any CPU.Build.0 = Portable-Debug|Any CPU
 		{B419782D-CA57-40F9-9322-340A4E852E82}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
@@ -97,6 +99,24 @@ Global
 		{E01674C0-B8D7-4598-971C-48B0180E274A}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
 		{E01674C0-B8D7-4598-971C-48B0180E274A}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
 		{E01674C0-B8D7-4598-971C-48B0180E274A}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net40-Debug|Any CPU.Build.0 = Net40-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net40-Release|Any CPU.Build.0 = Net40-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{937E445A-5604-4998-A9F5-9BE1E39001A5}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Net40-Debug|Any CPU.ActiveCfg = Net40-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Net40-Release|Any CPU.ActiveCfg = Net40-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Net45-Debug|Any CPU.ActiveCfg = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Net45-Debug|Any CPU.Build.0 = Net45-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Net45-Release|Any CPU.ActiveCfg = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Net45-Release|Any CPU.Build.0 = Net45-Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Portable-Debug|Any CPU.ActiveCfg = Portable-Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274F}.Portable-Release|Any CPU.ActiveCfg = Portable-Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,5 +129,7 @@ Global
 		{937E445A-5604-4998-A9F5-9BE1E39001A4} = {2697CCC5-FB26-4F02-9AAA-97D55883C4A3}
 		{E01674C0-B8D7-4598-971C-48B0180E273F} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
 		{E01674C0-B8D7-4598-971C-48B0180E274A} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
+		{937E445A-5604-4998-A9F5-9BE1E39001A5} = {2697CCC5-FB26-4F02-9AAA-97D55883C4A3}
+		{E01674C0-B8D7-4598-971C-48B0180E274F} = {27F92F6A-8799-4446-BF25-61D4A3534EAF}
 	EndGlobalSection
 EndGlobal
