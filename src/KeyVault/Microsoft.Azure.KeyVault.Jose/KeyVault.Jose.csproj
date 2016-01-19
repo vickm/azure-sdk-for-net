@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{937E445A-5604-4998-A9F5-9BE1E39001A5}</ProjectGuid>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.KeyVault.Jose</RootNamespace>
+    <AssemblyName>Microsoft.Azure.KeyVault.Jose</AssemblyName>
+    <OutputType>Library</OutputType>
+    <RestorePackages>true</RestorePackages>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NuGetPackageImportStamp>c6637abc</NuGetPackageImportStamp>
+  </PropertyGroup>
+  <Import Project="..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <None Include="Microsoft.Azure.KeyVault.Jose.nuspec" />
+    <None Include="Microsoft.Azure.KeyVault.Jose.nuget.proj">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Base64UrlEncoding.cs" />
+    <Compile Include="JweObject.cs" />
+    <Compile Include="JweHeader.cs" />
+    <Compile Include="JweKeyNotFoundException.cs" />
+    <Compile Include="JsonWebEncryption.cs" />
+    <Compile Include="JweFormatException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Azure.KeyVault.Core">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net40' ">
+    <Reference Include="Microsoft.Azure.KeyVault">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.1.0.0\lib\net40\Microsoft.Azure.KeyVault.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Extensions">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Extensions.1.0.3\lib\net40\Microsoft.Azure.KeyVault.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net45' ">
+    <Reference Include="Microsoft.Azure.KeyVault">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.1.0.0\lib\net45\Microsoft.Azure.KeyVault.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Extensions">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Extensions.1.0.3\lib\net45\Microsoft.Azure.KeyVault.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="'$(LibraryFxTarget)' == 'net40' AND Exists('$(LibraryNugetPackageFolder)\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+</Project>
