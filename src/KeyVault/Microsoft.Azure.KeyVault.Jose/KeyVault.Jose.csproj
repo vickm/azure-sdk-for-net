@@ -5,25 +5,28 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{937E445A-5604-4998-A9F5-9BE1E39001A5}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Microsoft.Azure.KeyVault.Jose</RootNamespace>
-    <AssemblyName>Microsoft.Azure.KeyVault.Jose</AssemblyName>
+    <RootNamespace>Microsoft.Azure.KeyVault.Express</RootNamespace>
+    <AssemblyName>Microsoft.Azure.KeyVault.Express</AssemblyName>
     <OutputType>Library</OutputType>
     <RestorePackages>true</RestorePackages>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NuGetPackageImportStamp>c6637abc</NuGetPackageImportStamp>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
+    <DocumentationFile>bin\Net45-Debug\Microsoft.Azure.KeyVault.Express.xml</DocumentationFile>
+  </PropertyGroup>
   <Import Project="..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <None Include="Microsoft.Azure.KeyVault.Jose.nuspec" />
-    <None Include="Microsoft.Azure.KeyVault.Jose.nuget.proj">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Microsoft.Azure.KeyVault.AzureServiceDeploy.nuget.proj" />
+    <None Include="Microsoft.Azure.KeyVault.AzureServiceDeploy.nuspec" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base64UrlEncoding.cs" />
+    <Compile Include="CertificateKey.cs" />
+    <Compile Include="CertificateStoreKeyResolver.cs" />
     <Compile Include="JweObject.cs" />
     <Compile Include="JweHeader.cs" />
     <Compile Include="JweKeyNotFoundException.cs" />

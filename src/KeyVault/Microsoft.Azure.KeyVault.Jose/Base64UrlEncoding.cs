@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Microsoft.Azure.KeyVault.Jose
+namespace Microsoft.Azure.KeyVault.Express
 {
     /// <summary>
     /// Contains the functionalities to handle base 64 URL encoding 

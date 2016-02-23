@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <!--
-    Microsoft.Azure.KeyVault.Jose
+    Microsoft.Azure.KeyVault.AzureServiceDeploy
     -->
-    <SdkNuGetPackage Include="Microsoft.Azure.KeyVault.Jose">
+    <SdkNuGetPackage Include="Microsoft.Azure.KeyVault.AzureServiceDeploy">
       <PackageVersion>0.9.1-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>

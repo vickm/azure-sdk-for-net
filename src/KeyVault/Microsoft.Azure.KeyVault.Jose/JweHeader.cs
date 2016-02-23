@@ -20,7 +20,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Microsoft.Azure.KeyVault.Jose
+namespace Microsoft.Azure.KeyVault.Express
 {
     [JsonObject]
     public class JweHeader

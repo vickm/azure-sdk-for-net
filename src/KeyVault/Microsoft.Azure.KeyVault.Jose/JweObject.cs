@@ -19,7 +19,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Microsoft.Azure.KeyVault.Jose
+namespace Microsoft.Azure.KeyVault.Express
 {
     [JsonObject]
     public class JweObject

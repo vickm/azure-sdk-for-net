@@ -24,7 +24,7 @@ using Microsoft.Azure.KeyVault.Core;
 using Microsoft.Azure.KeyVault.Cryptography;
 using Microsoft.Azure.KeyVault.Cryptography.Algorithms;
 
-namespace Microsoft.Azure.KeyVault
+namespace Microsoft.Azure.KeyVault.Express
 {
     /// <summary>
     /// An RSA key.

@@ -17,7 +17,7 @@
 
 using System;
 
-namespace Microsoft.Azure.KeyVault.Jose
+namespace Microsoft.Azure.KeyVault.Express
 {
     public class JweKeyNotFoundException : Exception
     {

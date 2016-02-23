@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Core;
 using Microsoft.Azure.KeyVault.Cryptography.Algorithms;
-using Microsoft.Azure.KeyVault.Jose;
+using Microsoft.Azure.KeyVault.Express;
 using Xunit;
 
 namespace KeyVault.Jose.Tests

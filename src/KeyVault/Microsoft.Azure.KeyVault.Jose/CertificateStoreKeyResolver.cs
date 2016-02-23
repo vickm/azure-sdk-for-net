@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Core;
 
-namespace KeyVault.Jose.Tests
+namespace Microsoft.Azure.KeyVault.Express
 {
     public class CertificateStoreKeyResolver : IKeyResolver
     {

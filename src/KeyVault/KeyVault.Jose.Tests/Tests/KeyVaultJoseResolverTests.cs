@@ -26,7 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Cryptography.Algorithms;
-using Microsoft.Azure.KeyVault.Jose;
+using Microsoft.Azure.KeyVault.Express;
 using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;

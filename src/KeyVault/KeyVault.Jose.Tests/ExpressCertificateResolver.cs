@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Core;
+using Microsoft.Azure.KeyVault.Express;
 
 namespace KeyVault.Jose.Tests
 {

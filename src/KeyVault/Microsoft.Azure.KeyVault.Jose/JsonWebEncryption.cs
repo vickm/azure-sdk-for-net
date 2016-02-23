@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault.Core;
 using Newtonsoft.Json;
 
-namespace Microsoft.Azure.KeyVault.Jose
+namespace Microsoft.Azure.KeyVault.Express
 {
     public static class JsonWebEncryption
     {
