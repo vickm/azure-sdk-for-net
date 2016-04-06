@@ -30,12 +30,12 @@
         <dependency id="Microsoft.Bcl.Build" version="1.0.14" />
         <dependency id="Microsoft.Azure.KeyVault" version="1.0.0" />
         <dependency id="Microsoft.Azure.KeyVault.Core" version="1.0.0" />
-        <dependency id="Microsoft.Azure.KeyVault.Extensions" version="1.0.3" />
+        <dependency id="Microsoft.Azure.KeyVault.Extensions" version="1.0.4" />
       </group>
       <group targetFramework="net45">
         <dependency id="Microsoft.Azure.KeyVault" version="1.0.0" />
         <dependency id="Microsoft.Azure.KeyVault.Core" version="1.0.0" />
-        <dependency id="Microsoft.Azure.KeyVault.Extensions" version="1.0.3" />
+        <dependency id="Microsoft.Azure.KeyVault.Extensions" version="1.0.4" />
       </group>
     </dependencies>
   </metadata>
