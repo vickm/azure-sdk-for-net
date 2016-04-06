@@ -35,14 +35,14 @@
     <Reference Include="Microsoft.Azure.KeyVault.Core">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Extensions">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Extensions.1.0.4\lib\net40\Microsoft.Azure.KeyVault.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net40' ">
     <Reference Include="Microsoft.Azure.KeyVault">
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.1.0.0\lib\net40\Microsoft.Azure.KeyVault.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.KeyVault.Extensions">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Extensions.1.0.3\lib\net40\Microsoft.Azure.KeyVault.Extensions.dll</HintPath>
-      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup Condition=" '$(LibraryFxTarget)' == 'net45' ">
@@ -50,7 +50,7 @@
       <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.1.0.0\lib\net45\Microsoft.Azure.KeyVault.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Extensions">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Extensions.1.0.3\lib\net45\Microsoft.Azure.KeyVault.Extensions.dll</HintPath>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Extensions.1.0.4\lib\net45\Microsoft.Azure.KeyVault.Extensions.dll</HintPath>
       <Private>True</Private>
     </Reference>
   </ItemGroup>
