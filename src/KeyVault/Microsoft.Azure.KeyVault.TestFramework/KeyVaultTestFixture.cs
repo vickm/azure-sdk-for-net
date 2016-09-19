@@ -35,46 +35,58 @@ namespace KeyVault.TestFramework
     public class KeyVaultTestFixture : IDisposable
     {
         // Required in test code
-        public string vaultAddress;
-        public bool standardVaultOnly;
-        public string keyName;
-        public string keyVersion;
-        public KeyIdentifier keyIdentifier;
-        public ClientCredential clientCredential;
+        public string           _vaultAddress;
+        public bool             _standardVaultOnly;
+
+        public string           _keyName;
+        public string           _keyVersion;
+        public KeyIdentifier    _keyIdentifier;
+
+        public ClientCredential _clientCredential;
+
+        public HttpRecorderMode Mode;
 
         // Required for cleaning up at the end of the test
         private string rgName = "", appObjectId = "";
         private bool fromConfig;
-        private TokenCache tokenCache;
 
         public KeyVaultTestFixture()
         {
-            Initialize(string.Empty);
+            Initialize( this.GetType().FullName );
 
-            if (vaultAddress != null && HttpMockServer.Mode == HttpRecorderMode.Record)
-            { 
-                //Create one key to use for testing. Key creation is expensive.
-                var myClient = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
-                keyName = "sdktestkey";
+            if ( Mode == HttpRecorderMode.Record )
+            {
+                // Create one key to use for testing. Key creation is expensive.
+                var client     = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
+
                 var attributes = new KeyAttributes();
-                var createdKey = myClient.CreateKeyAsync(vaultAddress, keyName, JsonWebKeyType.Rsa, 2048,
-                    JsonWebKeyOperation.AllOperations, attributes).GetAwaiter().GetResult();
-                keyIdentifier = new KeyIdentifier(createdKey.Key.Kid);
-                keyName = keyIdentifier.Name;
-                keyVersion = keyIdentifier.Version;
-                tokenCache = new TokenCache();
+                var createdKey = Task.Run( () => client.CreateKeyAsync( _vaultAddress,
+                                                                        _keyName,
+                                                                        JsonWebKeyType.Rsa,
+                                                                        2048,
+                                                                        JsonWebKeyOperation.AllOperations,
+                                                                        attributes ) ).ConfigureAwait( false ).GetAwaiter().GetResult();
+                _keyIdentifier = new KeyIdentifier( createdKey.Key.Kid );
+                _keyVersion    = _keyIdentifier.Version;
             }
         }
 
-        public void Initialize(string className)
+        public void Initialize( string className )
         {
             HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
-            HttpMockServer.Initialize(className, "InitialCreation", HttpRecorderMode.Record);
-            HttpMockServer.CreateInstance();
 
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            Mode = HttpMockServer.GetCurrentMode();
+
+            if ( Mode == HttpRecorderMode.Record )
             {
-                fromConfig = FromConfiguration();
+                // Obtain target settings from configuration if this is record mode.
+                fromConfig = LoadConfiguration();
+
+                if ( !fromConfig ) throw new InvalidOperationException( "Configuration for record mode was not loaded" );
+
+                // Boot the mock http server
+                HttpMockServer.Initialize( className, "InitialCreation", HttpRecorderMode.Record );
+                HttpMockServer.CreateInstance();
             }
         }
 
@@ -126,33 +138,42 @@ namespace KeyVault.TestFramework
             });
         }
 
-        private bool FromConfiguration()
+        private bool LoadConfiguration()
         {
-            string vault = TestConfigurationManager.TryGetEnvironmentOrAppSetting("VaultUrl");
-            string authClientId = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientId");
-            string authSecret = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientSecret");
+            string vault                   = TestConfigurationManager.TryGetEnvironmentOrAppSetting("VaultUrl");
+            string client_id               = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientId");
+            string client_secret           = TestConfigurationManager.TryGetEnvironmentOrAppSetting("AuthClientSecret");
             string standardVaultOnlyString = TestConfigurationManager.TryGetEnvironmentOrAppSetting("StandardVaultOnly");
-            bool result;
-            if (!bool.TryParse(standardVaultOnlyString, out result))
+            string keyName                 = TestConfigurationManager.TryGetEnvironmentOrAppSetting("KeyName");
+
+            bool standardVaultOnly;
+
+            if ( !bool.TryParse( standardVaultOnlyString, out standardVaultOnly ) )
             {
-                result = false;
+                standardVaultOnly = false;
             }
 
-            if (string.IsNullOrWhiteSpace(vault) || string.IsNullOrWhiteSpace(authClientId) || string.IsNullOrWhiteSpace(authSecret))
+            if ( string.IsNullOrWhiteSpace( vault ) || string.IsNullOrWhiteSpace( client_id ) || string.IsNullOrWhiteSpace( client_secret ) )
+            {
                 return false;
+            }
             else
             {
-                this.vaultAddress = vault;
-                this.clientCredential = new ClientCredential(authClientId, authSecret);
-                this.standardVaultOnly = result;
+                if ( string.IsNullOrWhiteSpace( keyName ) ) keyName = "AzureSDKTestKey";
+
+                _vaultAddress      = vault;
+                _keyName           = keyName;
+                _clientCredential  = new ClientCredential( client_id, client_secret );
+                _standardVaultOnly = standardVaultOnly;
+
                 return true;
             }
         }
         
         public async Task<string> GetAccessToken(string authority, string resource, string scope)
         {
-            var context = new AuthenticationContext(authority, tokenCache);
-            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
+            var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
+            var result = await context.AcquireTokenAsync(resource, _clientCredential).ConfigureAwait(false);
 
             return result.AccessToken;
         }
@@ -169,20 +190,24 @@ namespace KeyVault.TestFramework
             var testHttpHandler = new TestHttpMessageHandler();
             return new DelegatingHandler[] { server, testHttpHandler };
         }
+
         public void Dispose()
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record && !fromConfig)
+            if ( Mode == HttpRecorderMode.Record && !fromConfig )
             {
                 var testEnv = TestEnvironmentFactory.GetTestEnvironment();
-                var context = new MockContext();
-                
-                var resourcesClient = context.GetServiceClient<ResourceManagementClient>();
-                var graphClient = context.GetServiceClient<GraphRbacManagementClient>();
-                graphClient.TenantID = testEnv.Tenant;
-                graphClient.BaseUri = new Uri("https://graph.windows.net");
-                
-                graphClient.Application.Delete(appObjectId);
-                resourcesClient.ResourceGroups.Delete(rgName);
+                using ( var context = new MockContext() )
+                {
+
+                    var resourcesClient = context.GetServiceClient<ResourceManagementClient>();
+                    var graphClient     = context.GetServiceClient<GraphRbacManagementClient>();
+
+                    graphClient.TenantID = testEnv.Tenant;
+                    graphClient.BaseUri = new Uri( "https://graph.windows.net" );
+
+                    graphClient.Application.Delete( appObjectId );
+                    resourcesClient.ResourceGroups.Delete( rgName );
+                }
             }
         }
     }

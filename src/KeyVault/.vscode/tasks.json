@@ -14,6 +14,7 @@
                 "Microsoft.Azure.KeyVault",
                 "Microsoft.Azure.KeyVault.Cryptography",
                 "Microsoft.Azure.KeyVault.Extensions",
+                "Microsoft.Azure.KeyVault.Jose",
                 "-f", "netstandard15"
             ],
             "isBuildCommand": true,

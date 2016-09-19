@@ -357,7 +357,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             }
             catch ( Exception ex )
             {
-                throw new Exception( "Key with extra bit on \"" + paramName + "\" didn't produce expected result", ex );
+                throw new Exception( "Key with extra bit on \"" + paramName + "\" didn't throw CryptographicException", ex );
             }
         }
 

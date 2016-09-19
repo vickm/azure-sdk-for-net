@@ -19,65 +19,49 @@ using System.Net;
 using System.Globalization;
 using System.Threading;
 using KeyVault.TestFramework;
-using System.Net.Http;
 
 namespace Microsoft.Azure.KeyVault.Tests
 {
     public class KeyVaultOperationsTest : IClassFixture<KeyVaultTestFixture>
     {
-        private KeyVaultTestFixture fixture;
+        private KeyVaultTestFixture _fixture;
 
-        public KeyVaultOperationsTest(KeyVaultTestFixture fixture)
-        {
-            this.fixture = fixture;
-            _standardVaultOnly = fixture.standardVaultOnly;
-            _vaultAddress = fixture.vaultAddress;
-            _keyName = fixture.keyName;
-            _keyVersion = fixture.keyVersion;
-            _keyIdentifier = fixture.keyIdentifier;
-        }
-
-        private bool _standardVaultOnly = false;
         private string _vaultAddress = "";
         private string _keyName = "";
         private string _keyVersion = "";
         private KeyIdentifier _keyIdentifier;
+        private bool _standardVaultOnly = false;
 
-        private void Initialize()
+        public KeyVaultOperationsTest(KeyVaultTestFixture _fixture)
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            this._fixture = _fixture;
+
+            _standardVaultOnly = _fixture._standardVaultOnly;
+            _vaultAddress = _fixture._vaultAddress;
+            _keyName = _fixture._keyName;
+            _keyVersion = _fixture._keyVersion;
+            _keyIdentifier = _fixture._keyIdentifier;
+        }
+
+
+        private KeyVaultClient GetKeyVaultClient()
+        {
+            if ( _fixture.Mode == HttpRecorderMode.Record)
             {
                 HttpMockServer.Variables["VaultAddress"] = _vaultAddress;
-                HttpMockServer.Variables["KeyName"] = _keyName;
-                HttpMockServer.Variables["KeyVersion"] = _keyVersion;
+                HttpMockServer.Variables["KeyName"]      = _keyName;
+                HttpMockServer.Variables["KeyVersion"]   = _keyVersion;
             }
             else
             {
                 _vaultAddress = HttpMockServer.Variables["VaultAddress"];
-                _keyName = HttpMockServer.Variables["KeyName"];
-                _keyVersion = HttpMockServer.Variables["KeyVersion"];
+                _keyName      = HttpMockServer.Variables["KeyName"];
+                _keyVersion   = HttpMockServer.Variables["KeyVersion"];
             }
-        }
 
-        private KeyVaultClient GetKeyVaultClient()
-        {
-            Initialize();
-            _keyIdentifier = new KeyIdentifier(_vaultAddress, _keyName, _keyVersion);
-            return fixture.CreateKeyVaultClient();
-        }
+            _keyIdentifier = new KeyIdentifier( _vaultAddress, _keyName, _keyVersion );
 
-        [Fact]
-        public void KeyVaultConstructor()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                Initialize();
-                var httpClient = HttpClientFactory.Create(fixture.GetHandlers());
-                
-                var kvClient = new KeyVaultClient(new TestKeyVaultCredential(fixture.GetAccessToken), httpClient);
-                Assert.Equal(httpClient, kvClient.HttpClient);
-                kvClient.GetKeysAsync(_vaultAddress).GetAwaiter().GetResult();
-            }            
+            return _fixture.CreateKeyVaultClient();
         }
 
         #region Key Operations
@@ -2327,9 +2311,9 @@ namespace Microsoft.Azure.KeyVault.Tests
 
         }
 
-        protected static byte[] RandomBytes(int length)
+        protected byte[] RandomBytes(int length)
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            if ( _fixture.Mode == HttpRecorderMode.Record)
             {
                 var bytes = new byte[length];
                 Random rnd = new Random();
@@ -2343,7 +2327,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             }
         }
 
-        protected static byte[] RandomHash(HashAlgorithm hashAlgorithm, int length)
+        protected byte[] RandomHash(HashAlgorithm hashAlgorithm, int length)
         {
             var data = RandomBytes(length);
             var hash = hashAlgorithm.ComputeHash(data);
@@ -2431,9 +2415,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             };
         }
 
-        private static byte[] GetSymmetricKeyBytes()
+        private byte[] GetSymmetricKeyBytes()
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            if ( _fixture.Mode == HttpRecorderMode.Record)
             {
                 var symmetricKey = Aes.Create();
                 var symmetricKeyBytes = symmetricKey.Key;
@@ -2478,7 +2462,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 var pendingCertificateResponse = client.GetCertificateOperationAsync(_vaultAddress, pendingCertificate.CertificateOperationIdentifier.Name).GetAwaiter().GetResult();
                 if (0 == string.Compare(pendingCertificateResponse.Status, "InProgress", true))
                 {
-                    if(HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if( _fixture.Mode == HttpRecorderMode.Record)
                         Thread.Sleep(TimeSpan.FromSeconds(20));
                     pendingPollCount += 1;
                     continue;

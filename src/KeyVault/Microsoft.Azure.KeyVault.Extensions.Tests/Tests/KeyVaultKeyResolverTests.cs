@@ -3,20 +3,13 @@
 // license information.
 
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.KeyVault.Core;
-using Microsoft.Azure.KeyVault.WebKey;
-using Microsoft.Azure.Test;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Xunit;
 using KeyVault.TestFramework;
+using Microsoft.Azure.KeyVault.WebKey;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace Microsoft.Azure.KeyVault.Extensions.Tests
 {
@@ -26,40 +19,31 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
     /// </summary>
     public class KeyVaultKeyResolverTests : IClassFixture<KeyVaultTestFixture>
     {
-        private KeyVaultTestFixture fixture;
+        private KeyVaultTestFixture _fixture;
 
-        public KeyVaultKeyResolverTests(KeyVaultTestFixture fixture)
+        public KeyVaultKeyResolverTests( KeyVaultTestFixture fixture )
         {
-            this.fixture = fixture;
-            _standardVaultOnly = fixture.standardVaultOnly;
-            _vaultAddress = fixture.vaultAddress;
-            _keyName = fixture.keyName;
-            _keyVersion = fixture.keyVersion;
-            _keyIdentifier = fixture.keyIdentifier;
+            _fixture           = fixture;
         }
-
-        private bool _standardVaultOnly = false;
-        private string _vaultAddress = "";
-        private string _keyName = "";
-        private string _keyVersion = "";
-        private KeyIdentifier _keyIdentifier;
 
         private KeyVaultClient GetKeyVaultClient()
         {
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            if ( _fixture.Mode == HttpRecorderMode.Record )
             {
-                HttpMockServer.Variables["VaultAddress"] = _vaultAddress;
-                HttpMockServer.Variables["KeyName"] = _keyName;
-                HttpMockServer.Variables["KeyVersion"] = _keyVersion;
+                HttpMockServer.Variables["VaultAddress"] = _fixture._vaultAddress;
+                HttpMockServer.Variables["KeyName"] = _fixture._keyName;
+                HttpMockServer.Variables["KeyVersion"] = _fixture._keyVersion;
             }
             else
             {
-                _vaultAddress = HttpMockServer.Variables["VaultAddress"];
-                _keyName = HttpMockServer.Variables["KeyName"];
-                _keyVersion = HttpMockServer.Variables["KeyVersion"];
+                _fixture._vaultAddress = HttpMockServer.Variables["VaultAddress"];
+                _fixture._keyName      = HttpMockServer.Variables["KeyName"];
+                _fixture._keyVersion   = HttpMockServer.Variables["KeyVersion"];
             }
-            _keyIdentifier = new KeyIdentifier(_vaultAddress, _keyName, _keyVersion);
-            return fixture.CreateKeyVaultClient();
+
+            _fixture._keyIdentifier = new KeyIdentifier( _fixture._vaultAddress, _fixture._keyName, _fixture._keyVersion );
+
+            return _fixture.CreateKeyVaultClient();
         }
 
         /// <summary>
@@ -72,7 +56,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
             {
                 // Arrange
                 var client = GetKeyVaultClient();
-                var vault = _vaultAddress;
+                var vault = _fixture._vaultAddress;
 
                 var key = client.CreateKeyAsync(vault, "TestKey", JsonWebKeyType.Rsa).GetAwaiter().GetResult();
 
@@ -132,7 +116,7 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         {
             // Arrange
             var client = GetKeyVaultClient();
-            var vault = _vaultAddress;
+            var vault = _fixture._vaultAddress;
 
             var keyBytes = new byte[secretSize >> 3];
 
@@ -169,9 +153,9 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
 
             // NOTE: ctor with authentication callback. We cannot test this ctor unless
             //       we are running in live mode as it will create a new KeyVaultClient.
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            if ( _fixture.Mode == HttpRecorderMode.Record)
             {
-                resolver = new KeyVaultKeyResolver(fixture.GetAccessToken);
+                resolver = new KeyVaultKeyResolver(_fixture.GetAccessToken);
 
                 baseKey = resolver.ResolveKeyAsync(baseIdentifier, default(CancellationToken)).GetAwaiter().GetResult();
                 versionKey = resolver.ResolveKeyAsync(identifier, default(CancellationToken)).GetAwaiter().GetResult();
@@ -189,9 +173,9 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
 
             // NOTE: ctor with authentication callback. We cannot test this ctor unless
             //       we are running in live mode as it will create a new KeyVaultClient.
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            if ( _fixture.Mode == HttpRecorderMode.Record)
             {
-                resolver = new KeyVaultKeyResolver(vault, fixture.GetAccessToken);
+                resolver = new KeyVaultKeyResolver(vault, _fixture.GetAccessToken);
 
                 baseKey = resolver.ResolveKeyAsync(baseIdentifier, default(CancellationToken)).GetAwaiter().GetResult();
                 versionKey = resolver.ResolveKeyAsync(identifier, default(CancellationToken)).GetAwaiter().GetResult();

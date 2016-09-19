@@ -1,0 +1,65 @@
+{
+  "version": "2.0.0-preview",
+  "title": "Microsoft Azure Key Vault JOSE",
+  "description": "Microsoft Azure Key Vault Json Object Signing and Encryption Class Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Class library for Azure Key Vault Json Object Signing and Encryption",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure Key Vault JOSE" ],
+    "requireLicenseAcceptance": true,
+    "releaseNotes": ""
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Azure.KeyVault.Core": "[2.0.3-preview, 3.0)",
+    "Microsoft.Azure.KeyVault.Cryptography": "[2.0.2-preview, 3.0)"
+  },
+
+  "frameworks": {
+    "netstandard1.5": {
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NETSTANDARD", "NETSTANDARD15" ]
+      },
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Collections": "4.0.11",
+        "System.Runtime": "4.1.0",
+        "Microsoft.CSharp": "4.0.1",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Security.Cryptography.Csp": "4.0.0",
+        "System.Linq": "4.1.0",
+        "System.Runtime.Extensions": "4.1.0",
+        "Newtonsoft.Json": "9.0.1"
+      },
+      "frameworkAssemblies": {
+      }
+    },
+    "net45": {
+      "buildOptions": {
+        "debugType": "full",
+        "define": [ "NET45" ]
+      },
+      "dependencies": {
+        "Newtonsoft.Json": "6.0.8"
+      },
+      "frameworkAssemblies": {
+        "System": { "type": "build" },
+        "System.Security": { "type": "default" }
+      }
+    }
+  },
+
+  "configurations": {
+  }
+}
