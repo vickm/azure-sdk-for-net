@@ -1,0 +1,65 @@
+{
+  "version": "2.0.0-preview",
+  "title": "Microsoft Azure Key Vault Azure Service Deploy",
+  "description": "Microsoft Azure Key Vault Service Deploy Package",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Class library for Service Deployment",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure Key Vault ServiceDeploy" ],
+    "requireLicenseAcceptance": true,
+    "releaseNotes": ""
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Azure.KeyVault.Jose": "[2.0.0-preview, 3.0)"
+  },
+
+  "frameworks": {
+    "netstandard1.5": {
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NETSTANDARD", "NETSTANDARD15" ]
+      },
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Collections": "4.0.11",
+        "System.Runtime": "4.1.0",
+        "Microsoft.CSharp": "4.0.1",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Security.Cryptography.Csp": "4.0.0",
+        "System.Linq": "4.1.0",
+        "System.Runtime.Extensions": "4.1.0",
+        "Newtonsoft.Json": "9.0.1",
+        "System.Security.Cryptography.X509Certificates": "4.1.0"
+      },
+      "frameworkAssemblies": {
+      }
+    },
+    "net45": {
+      "buildOptions": {
+        "debugType": "full",
+        "define": [ "NET45" ]
+      },
+      "dependencies": {
+        "Newtonsoft.Json": "6.0.8"
+      },
+      "frameworkAssemblies": {
+        "System": { "type": "build" },
+        "System.Security": { "type": "default" }
+      }
+    }
+  },
+
+  "configurations": {
+  }
+}

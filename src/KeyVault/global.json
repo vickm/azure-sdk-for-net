@@ -4,6 +4,7 @@
     "Microsoft.Azure.KeyVault.Core",
     "Microsoft.Azure.KeyVault.Cryptography",
     "Microsoft.Azure.KeyVault.Extensions",
-    "Microsoft.Azure.KeyVault.Jose"
+    "Microsoft.Azure.KeyVault.Jose",
+    "Microsoft.Azure.KeyVault.AzureServiceDeploy"
   ]
 }
