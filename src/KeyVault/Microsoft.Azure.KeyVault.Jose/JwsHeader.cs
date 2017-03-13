@@ -20,5 +20,10 @@ namespace Microsoft.Azure.KeyVault.Jose
     {
         [JsonProperty(PropertyName = "alg", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Required = Required.Default)]
         public string SignatureAlgorithm;
+
+        [JsonProperty(PropertyName = "typ", DefaultValueHandling = DefaultValueHandling.Ignore, NullValueHandling = NullValueHandling.Ignore, Required = Required.Default)]
+        public string JoseType;
+
+
     }
 }
