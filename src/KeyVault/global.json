@@ -1,4 +1,7 @@
 {
+  "sdk": {
+    "version": "1.0.0-preview2-003133"
+  },
   "projects": [
     "Microsoft.Azure.KeyVault",
     "Microsoft.Azure.KeyVault.Core",
